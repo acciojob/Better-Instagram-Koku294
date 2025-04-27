@@ -1,36 +1,22 @@
-const divs = document.querySelectorAll('.image');
+const images = document.querySelectorAll('.image');
+let draggedElement = null;
 
-// Add event listeners for drag and drop
-let draggedImage = null;
 images.forEach(image => {
-    image.addEventListener('dragstart', (e)=>{
-    draggedImage=e.target;
-		e.dataTransfer.effectAllowed = 'move';
+  image.addEventListener('dragstart', (e) => {
+    draggedElement = e.target;
   });
-image.addEventListener('dragover', (e) => {
-    e.preventDefault(); // Required to allow drop
-    e.dataTransfer.dropEffect = 'move';
+
+  image.addEventListener('dragover', (e) => {
+    e.preventDefault(); // Important to allow drop
   });
 
   image.addEventListener('drop', (e) => {
     e.preventDefault();
-    if (e.target !== draggedImage && e.target.classList.contains('image')) {
-      swapImages(draggedImage, e.target);
+    if (draggedElement && draggedElement !== e.target) {
+      // Swap the background images
+      const draggedBg = draggedElement.style.backgroundImage;
+      draggedElement.style.backgroundImage = e.target.style.backgroundImage;
+      e.target.style.backgroundImage = draggedBg;
     }
   });
 });
-
-function swapImages(img1, img2) {
-  const temp = img1.style.backgroundImage;
-  img1.style.backgroundImage = img2.style.backgroundImage;
-  img2.style.backgroundImage = temp;
-}
-//✅ Now everything will work perfectly — drag one image over another, and they’ll swap places.
-
-//Would you like this wrapped in a downloadable zip or deployed to a live preview site like CodePen?
-
-
-
-
-
-
