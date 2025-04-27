@@ -7,7 +7,7 @@ body {
 
 .flex {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap;7
   justify-content: center;
   gap: 20px;
 }

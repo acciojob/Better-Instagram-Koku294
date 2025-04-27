@@ -9,7 +9,9 @@ images.forEach(image => {
   image.addEventListener('dragover', (e) => {
     e.preventDefault(); // Important to allow drop
   });
-	
+	cy.get('body').then($body => {
+  cy.log($body.html());
+});
 
   image.addEventListener('drop', (e) => {
     e.preventDefault();
