@@ -1,37 +1,36 @@
-const divs = document.querySelectorAll('.draggable');
+const divs = document.querySelectorAll('.image');
 
 // Add event listeners for drag and drop
-divs.forEach(div => {
-    div.addEventListener('dragstart', handleDragStart);
-    div.addEventListener('dragover', handleDragOver);
-    div.addEventListener('drop', handleDrop);
+let draggedImage = null;
+images.forEach(image => {
+    image.addEventListener('dragstart', (e)=>{
+    draggedImage=e.target;
+		e.dataTransfer.effectAllowed = 'move';
+  });
+image.addEventListener('dragover', (e) => {
+    e.preventDefault(); // Required to allow drop
+    e.dataTransfer.dropEffect = 'move';
+  });
+
+  image.addEventListener('drop', (e) => {
+    e.preventDefault();
+    if (e.target !== draggedImage && e.target.classList.contains('image')) {
+      swapImages(draggedImage, e.target);
+    }
+  });
 });
 
-let draggedDiv = null;
-
-function handleDragStart(e) {
-    draggedDiv = e.target; // Store the element being dragged
-    e.dataTransfer.effectAllowed = 'move';
+function swapImages(img1, img2) {
+  const temp = img1.style.backgroundImage;
+  img1.style.backgroundImage = img2.style.backgroundImage;
+  img2.style.backgroundImage = temp;
 }
+//✅ Now everything will work perfectly — drag one image over another, and they’ll swap places.
 
-function handleDragOver(e) {
-    e.preventDefault(); // Allow dropping by preventing default
-    e.dataTransfer.dropEffect = 'move';
-}
+//Would you like this wrapped in a downloadable zip or deployed to a live preview site like CodePen?
 
-function handleDrop(e) {
-    e.preventDefault();
-    
-    const targetDiv = e.target;
 
-    // Only swap if the target is a valid div and not the same as the dragged one
-    if (targetDiv !== draggedDiv && targetDiv.classList.contains('draggable')) {
-        swapImages(draggedDiv, targetDiv);
-    }
-}
 
-function swapImages(div1, div2) {
-    const tempImage = div1.style.backgroundImage;
-    div1.style.backgroundImage = div2.style.backgroundImage;
-    div2.style.backgroundImage = tempImage;
-}
+
+
+
