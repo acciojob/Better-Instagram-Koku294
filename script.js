@@ -9,6 +9,7 @@ images.forEach(image => {
   image.addEventListener('dragover', (e) => {
     e.preventDefault(); // Important to allow drop
   });
+	
 
   image.addEventListener('drop', (e) => {
     e.preventDefault();
